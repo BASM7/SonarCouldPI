@@ -1,0 +1,123 @@
+{% load custom_tag %}
+{% load static %}
+
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="tutorNavbar">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
+                    {% if select_navbar_start %}
+                    <li class="nav-item dropdown">
+                        <span class="nav-link active">Inicio</span>
+                    </li>
+                    {% else %}
+                    <li>
+                    <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                    </li>
+                    {% endif %}
+
+                    {% if select_navbar_calendar %}
+                    <li class="nav-item dropdown">
+                        <span class="nav-link active" id="navbarTutor" role="button"
+                           aria-expanded="false">
+                            Calendario
+                        </span>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'tutor_calendar' %}" id="navbarTutor" role="button"
+                           aria-expanded="false">
+                            Calendario
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if select_navbar_profile %}
+                    <li class="nav-item dropdown">
+                        <span class="nav-link active" role="button" aria-expanded="false">
+                            Perfil
+                        </span>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'tutor_profile' %}" role="button" aria-expanded="false">
+                            Perfil
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {%if select_navbar_courses %}
+                    <li class="nav-item dropdown">
+                        <span class="nav-link active" role="button" aria-expanded="false">
+                            Mis cursos
+                        </span>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'tutor_courses' %}" role="button" aria-expanded="false">
+                            Mis cursos
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% if select_navbar_tutorships%}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle active" href="#" id="navbarSessions" role="button"
+                           data-toggle="dropdown" aria-expanded="false">
+                            Mis tutorías
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'tutor_pending_requests' %}">Pendientes</a></li>
+                            <li><a class="dropdown-item" href="{% url 'tutor_accepted_requests' %}">Aceptadas</a></li>
+                            <li><a class="dropdown-item" href="{% url 'tutor_done_requests' %}">Historial</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarSessions" role="button"
+                           data-toggle="dropdown" aria-expanded="false">
+                            Mis tutorías
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'tutor_pending_requests' %}">Pendientes</a></li>
+                            <li><a class="dropdown-item" href="{% url 'tutor_accepted_requests' %}">Aceptadas</a></li>
+                            <li><a class="dropdown-item" href="{% url 'tutor_done_requests' %}">Historial</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+
+                    {% if select_navbar_profit%}
+                    <li class="nav-item dropdown">
+                        <span class="nav-link active" role="button" aria-expanded="false">
+                            Ganancias
+                        </span>
+                    </li>
+                    {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{% url 'tutor_profit' %}" role="button" aria-expanded="false">
+                            Ganancias
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <p class="white-text-navbar">Hola, {{ request|get_name }}</p>
+                    {% endif %}
+                    <li class="nav-item dropdown mr-2">
+                        {% show_message_notifications %}
+                    </li>
+                    <li class="nav-item dropdown mr-4">
+                        {% show_notifications %}
+                    </li>
+                    <li class="nav-item">
+                        <a type="button" class="btn btn-primary button-blue" href="{% url 'logout' %}" >
+                            <img src="{% static "img/leave-icon.svg" %}" alt="leave-icon"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+

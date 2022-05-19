@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        </br>
+        {% if success %}
+            <div class="alert alert-success">
+                Se solicitó la tutoría de manera correcta
+            </div>
+        {% else %}
+            <div class="alert alert-danger">
+                Hubo un problema al solicitar la tutoría, por favor, inténtelo de nuevo más tarde
+            </div>
+        {% endif %}
+        </br>
+        <a class="btn btn-primary float-right button-blue"  href={% url 'index' %} aria-controls="redirect to index">
+        Aceptar
+        </a>
+    </div>
+{% endblock content %}

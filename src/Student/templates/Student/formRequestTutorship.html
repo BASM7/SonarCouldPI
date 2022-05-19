@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <form method="POST" class= "container-full-md" id="main-form">
+        {% csrf_token %}
+        
+        <input type="hidden" name="tutor" value="{{tutor.user.id}}">
+        <input type="hidden" name="fecha" value="{{date}}">
+
+        <div class="form-group col-md-10">
+            <label for="selectInitial">Hora incial</label>
+            <input type="time" id="selectInitial" class="form-control" name="inicial" min="{{min_time}}" max="{{max_time}}" required>
+            <small id="info-hours" class="form-text text-muted">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16">
+                    <title>info-icon</title>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                Las tutorías como mínimo son de una hora.
+            </small>
+            <small id="help_tutorship" class="form-text text-muted">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16">
+                    <title>info-icon</title>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                La tutoría tiene que iniciar entre {{min_time}} y {{max_time}}.
+            </small>
+            <small id="hour_help" class="form-text text-muted">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16">
+                    <title>info-icon</title>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                </svg>
+                {% if value_tutorship_person > 0 %}
+                    Esta tutoría tiene un costo de {{value_tutorship_person}} por persona.
+                {% else %}
+                    Esta tutoría es gratis.
+                {% endif %}
+            </small>
+        </div>
+
+        <div class="form-group col-md-10">
+            <label for="selectIncrement">Incremento</label>
+            <select id="selectIncrement" name="final" class="selectpicker show-tick" data-width="100%" data-size="5" title="Seleccione un tipo de sesión" required>
+                <option value ="0" selected> Ningún incremento </option>
+                <option value ="1"> 30 minutos de incremento </option>
+                <option value ="2"> 1 hora de incremento </option>
+            </select>
+
+            {% if value_tutorship_person > 0 %}
+                <small id="hour_add" class="form-text text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16">
+                        <title>info-icon</title>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+                    Por cada media hora incrementada se cobrará una adicional de {{increment}}.
+                </small>
+            {% endif %}
+        </div>
+
+
+        <div class="form-group col-md-10">
+            <label for="selectSession">Sesión</label>
+            <select id="selectSession" name="sesion" class="selectpicker show-tick" data-width="100%" data-size="5" title="Seleccione un tipo de sesión" required>
+                {% for session in sessions %}
+                    <option value ="{{session.name}}"> {{session.name}}</option>
+                {% endfor %}    
+            </select>
+        </div>
+
+        <div class="form-group col-md-10">
+            <label for="selectModality">Modalidad</label>
+            <select id="selectModality" name="modalidad" class="selectpicker show-tick" data-width="100%" data-size="5" title="Seleccione un tipo de modalidad" required>
+                {% for modal in modals %}
+                    <option value ="{{modal.name}}"> {{modal.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group col-md-10">
+            <label for="selectPayment">Retribución</label>
+            <select id="selectPayment" name="retribución" class="selectpicker show-tick" data-width="100%" data-size="5" title="Seleccione un tipo de retribución" required>
+                {% for payment in payments %}
+                    <option value ="{{payment.name}}"> {{payment.name}}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        {% if max_people > 1 %}
+            <div class="form-group col-md-10">
+                <label for="selectGuest">Invitados</label>
+                <select id="selectGuest" name="invitados" class="selectpicker show-tick" data-width="100%" data-size="5" data-live-search="true" title="Invitar personas" multiple data-selected-text-format="count > 5" data-max-options="{{max_people}}">
+                    {% for student in students %}
+                        <option value ="{{student.id}}"> {{student.name}} {{student.lastname}}</option>
+                    {% endfor %}
+                </select>
+                <small id="info-hour" class="form-text text-muted">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info" viewBox="0 0 16 16">
+                        <title>info-icon</title>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+                    Si es una tutoría individual no se preocupe por este apartado. Si no lo es aqui invite a las demás personas que van a asistir a la tutoría.
+                </small>
+            </div>
+        {% endif %}
+
+        <div class="form-group col-md-10 mb-2">
+            <button type="submit" class="btn btn-primary float-right button-blue">Agendar</button>
+            <a href="{{last_page}}"><button type="button" class="btn btn-danger float-right mr-2">Cancelar</button></a>
+        </div>
+
+    </form>
+
+    <script>
+        $('.selectpicker').selectpicker();
+    </script>
+
+</div>
+{% endblock content %}

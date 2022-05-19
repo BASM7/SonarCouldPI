@@ -1,0 +1,82 @@
+{% load socialaccount %}
+{% load custom_tag %}
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            {% if user.is_authenticated %}
+            <ul class="navbar-nav mr-auto">
+                {% if select_navbar_start %}
+                <span class="nav-link active">Inicio</span>
+                {% else %}
+                <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+                {% endif %}
+                {% if select_navbar_profile %}
+                <li class="nav-item dropdown">
+                    <span class="nav-link active" role="button" aria-expanded="false">
+                        Perfil
+                    </span>
+                </li>
+                {% else %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="{% url 'student_profile' %}" role="button" aria-expanded="false">
+                        Perfil
+                    </a>
+                </li>
+                {% endif %}
+                <li class="nav-item dropdown">
+                    {% if select_navbar_tutorships%}
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarSessions" role="button"
+                       data-toggle="dropdown" aria-expanded="false">
+                        Mis tutorías
+                    </a>
+                    {% else %}
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarSessions" role="button"
+                       data-toggle="dropdown" aria-expanded="false">
+                        Mis tutorías
+                    </a>
+                    {% endif %}
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="{% url 'student_pending_request' %}">Pendientes</a></li>
+                        <li><a class="dropdown-item" href="{% url 'student_accepted_request' %}">Aceptadas</a></li>
+                        <li><a class="dropdown-item" href="{% url 'student_rejected_request' %}">Rechazadas</a></li>
+                        <li><a class="dropdown-item" href="{% url 'student_done_request' %}">Historial</a></li>
+                    </ul>
+                </li>
+            </ul>
+            {% else %}
+            <ul class="navbar-nav mr-auto">
+                <span class="nav-link active">Inicio</span>
+            </ul>
+            {% endif %}
+            <ul class="navbar-nav ml-auto ">
+                {% if user.is_authenticated %}
+                <p class="white-text-navbar">Hola, {{ request|get_name }}</p>
+                {% endif %}
+                <li class="nav-item dropdown mr-2">
+                    {% if user.is_authenticated %}
+                    {% show_message_notifications %}
+                    {% endif %}
+                </li>
+                <li class="nav-item dropdown mr-4">
+                    {% if user.is_authenticated %}
+                    {% show_notifications %}
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                    <a type="button" class="btn btn-primary button-blue" href="{% url 'logout' %}" >
+                        <img src="{% static "img/leave-icon.svg" %}" alt="leave-icon"/>
+                    </a>
+                    {% else %}
+                    <a type="button" class="btn btn-primary button-blue" href="{% provider_login_url 'google' %}">
+                        <img src="{% static "img/user-icon.svg"%}" alt="user-icon"/>
+                        ACCEDER
+                    </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

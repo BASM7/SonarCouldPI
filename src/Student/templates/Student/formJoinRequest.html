@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    
+    <div class="form-group col-md-10">
+        <label for="session">Tipo de sesión</label>
+        <input id="session" type="text" class="form-control" readonly value="{{session}}">
+    </div>
+    <div class="form-group col-md-10">
+        <label for="session">Tipo de modalidad</label>
+        <input id="session" type="text" class="form-control" readonly value="{{modal}}">
+    </div>
+    <div class="form-group col-md-10">
+        <label for="session">Profesor</label>
+        <input id="session" type="text" class="form-control" readonly value="{{tutor}}">
+    </div>
+    
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group col-md-10 mt-5">
+            <button type="submit" class="btn btn-primary float-right button-blue">Unirse a la tutoría</button>
+            <a href="{{last_page}}"><button type="button" class="btn btn-danger float-right mr-2">Cancelar</button></a>
+        </div>
+    </form>
+</div>
+{% endblock content %}

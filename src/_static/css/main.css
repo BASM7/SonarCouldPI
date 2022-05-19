@@ -1,0 +1,31 @@
+#fc-dom-1::first-letter {
+  text-transform: capitalize;
+}
+
+.button-blue{
+  background-color: #1A54D4;
+  border-color: #1A54D4;
+}
+
+.label-as-badge{
+  background-color: #1A54D4;
+  border-radius: 1em;
+  padding-right: .4em;
+  padding-left: .4em;
+}
+
+.remove-decoration-a{
+  text-decoration: none;
+  color: inherit; 
+}
+
+.grey{
+  background-color: #919191;
+  border-color: #919191;
+}
+
+.white-text-navbar{
+  color:white;
+  margin-right: 1em;
+  margin-top: .4em;
+}

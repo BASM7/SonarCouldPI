@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "baseHead.html" %}
+    </head>
+    <body>
+        {% include "adminHeader.html" %}
+        <div class = "container-md" style = "margin-top: 1.5vw;">
+            {% include 'messages.html' %}
+            <form method = "POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input  class="btn btn-primary button-blue" type="submit" value="Agregar">
+            </form>
+        </div>
+    </body>
+</html>

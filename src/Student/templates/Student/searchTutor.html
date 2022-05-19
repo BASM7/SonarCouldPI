@@ -1,0 +1,16 @@
+{% extends "baseSearch.html" %}
+{% block content %}
+{% for result in results %}
+<a  href="{% url 'tutor_detail' tutor=result.email %}" style="text-decoration: none; color: inherit;">
+    <div class="card mb-3">
+        <div class="row no-gutters">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">{{result.name}} {{result.lastname}}</h5> 
+                </div>
+            </div>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endblock content %}

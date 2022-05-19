@@ -1,0 +1,94 @@
+#main {
+  margin: 50px 0;
+}
+
+#main #faq .card {
+  margin-bottom: 30px;
+  border: 0;
+}
+
+#main #faq .card .card-header {
+  border: 0;
+  -webkit-box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+          box-shadow: 0 0 20px 0 rgba(213, 213, 213, 0.5);
+  border-radius: 2px;
+  padding: 0;
+}
+
+#main #faq .card .card-header .btn-header-link {
+  display: block;
+  text-align: left;
+  background: #292B2C;
+  color: #FFFFFF;
+  padding: 20px;
+}
+
+#main #faq .card .card-header .btn-header-link:after{
+  font-family: "Font Awesome 5 Free";
+  content: "\f107";
+  font-weight: 900;
+  float: right;
+}
+
+#main #faq .card .card-header .btn-header-link.collapsed {
+  background: #292b2c;
+  color: #FFFFFF;
+}
+
+#main #faq .card .card-header .btn-header-link.collapsed:after{
+  content: "\f106";
+}
+
+#main #faq .card .collapsing {
+  background: #FFFFFF;
+  line-height: 30px;
+}
+
+#main #faq .card .collapse {
+  border: 0;
+}
+
+#main #faq .card .collapse.show {
+    background: #FFFFFF;
+    line-height: 30px;
+    color: #292b2c;
+}
+
+.modal-header {
+  background: #292b2c;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.requiredField {
+    font-weight: bold;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.control-group {
+    margin-bottom: 0.5vw;
+    margin-top: 0.5vw;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.control-label{
+    font-weight: bold;
+}
+
+.add-on {
+    background-color: #0275d8;
+    display: flex;
+    padding: 0.5vw;
+    border-radius: 0.25em;
+    color: #f7f7f7
+}

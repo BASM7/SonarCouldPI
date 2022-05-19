@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    {% include "baseHead.html" %}
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+    <link rel="stylesheet" href="{% static 'css/tutorshipView.css' %}">
+</head>
+<body>
+{% include "studentHeader.html" %}
+<div class="container-fluid">
+    <div class="col-md-10 offset-md-1 mt-4">
+        <h2 class="text-center mb-4"><strong>Resumen de tutoría.</strong></h2>
+        <div id="main">
+            <div class="container">
+                <div class="accordion" id="faq">
+                    <div class="card">
+                        <div class="card-header" id="faqhead1">
+                            <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+                               aria-expanded="true" aria-controls="faq1">Información General</a>
+                        </div>
+                        <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {% if tutorship.name %}
+                                    {{tutorship.name}}
+                                    {% else %}
+                                    Tutoría sin nombre.
+                                    {% endif %}
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <th>Curso:</th>
+                                                <td>{{tutorship_request.course_requested}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Modalidad:</th>
+                                                <td>{{tutorship_request.modality_requested}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Sesión:</th>
+                                                <td>{{tutorship_request.session_requested}}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Enlace:</th>
+                                                <td>
+                                                    {% if tutorship.url %}
+                                                    <a href="{{tutorship.url}}" target="_blank">Ir a la reunión.</a>
+                                                    {% else %}
+                                                    No hay enlace.
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>Tutor(a):</th>
+                                                <td>
+                                                    <a href="#">{{tutorship_request.tutor_requested.get_full_name}}</a>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <table class="table">
+                                            <tbody>
+                                            <tr>
+                                                <th>Descripción:</th>
+                                                <td>
+                                                    {% if tutorship.description %}
+                                                    {{tutorship.description}}
+                                                    {% else %}
+                                                    No hay descripción.
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="faqhead2">
+                            <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq2"
+                               aria-expanded="true" aria-controls="faq2">Participantes</a>
+                        </div>
+                        <div id="faq2" class="collapse" aria-labelledby="faqhead2" data-parent="#faq">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    {% if tutorship_request.num_requesters == 1 %}
+                                    Tienes 1 persona inscrita en esta tutoría.
+                                    {% else %}
+                                    Tienes {{tutorship_request.num_requesters}} personas inscritas en esta tutoría.
+                                    {% endif %}
+                                    {% if tutorship.remaining_capacity == 1 %}
+                                    Queda 1 cupo disponible.
+                                    {% elif tutorship.remaining_capacity > 1 %}
+                                    Quedan {{tutorship.remaining_capacity}} cupos disponibles.
+                                    {% else %}
+                                    No quedan cupos disponibles.
+                                    {% endif %}
+                                </h5>
+                                <div class="row">
+                                    <div class="col-md">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Nombre completo</th>
+                                                <th scope="col">Correo</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td><a href="#">{{tutorship_request.user_requester.get_full_name}}</a>
+                                                </td>
+                                                <td>{{tutorship_request.user_requester.email}}</td>
+                                            </tr>
+                                            {% for requester in requesters %}
+                                            <tr>
+                                                <td><a href="#">{{requester.user_requester.get_full_name}}</a></td>
+                                                <td>{{requester.user_requester.email}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header" id="faqhead3">
+                            <a href="#" class="btn btn-header-link collapsed" data-toggle="collapse" data-target="#faq3"
+                               aria-expanded="true" aria-controls="faq3">Recursos</a>
+                        </div>
+                        <div id="faq3" class="collapse" aria-labelledby="faqhead3" data-parent="#faq">
+                            <div class="card-body">
+                                <div class="row">
+                                    {% if resources %}
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col" class="col-md-4">Nombre</th>
+                                            <th scope="col" class="col-md-8">Descripción</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for resource_tutorship in resources %}
+                                        <tr>
+                                            <td><a href="{{resource_tutorship.resource.url}}" target="_blank">
+                                                {{resource_tutorship.resource.name}}</a>
+                                            </td>
+                                            <td>{{resource_tutorship.resource.description}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                    {% else %}
+                                    No hay recursos.
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

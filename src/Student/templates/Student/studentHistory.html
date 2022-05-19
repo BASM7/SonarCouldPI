@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        {% include "baseHead.html" %}
+    </head>
+    <body>
+        {% include "studentHeader.html" %}
+        <div class = "container-fluid">
+            <div class="form-check">
+                <div class="col-md-8 offset-md-2 mt-2">
+                    {% include 'messages.html' %}
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Tutor</th>
+                            <th scope="col" class="text-center">Curso</th>
+                            <th scope="col" class="text-center">Sesión</th>
+                            <th scope="col" class="text-center">Entorno</th>
+                            <th scope="col" class="text-center">Inicia</th>
+                            <th scope="col" class="text-center">Termina</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for tutorship in tutorships %}
+                            <tr>
+                                <td class="text-center"><a href="#">{{tutorship.request.request.tutor_requested.get_full_name}}</a></td>
+                                <td class="text-center">{{tutorship.request.request.course_requested.course_name}}</td>
+                                <td class="text-center">{{tutorship.request.request.session_requested.name}}</td>
+                                <td class="text-center">{{tutorship.request.request.display_meeting_type}}</td>
+                                <td class="text-center">{{tutorship.request.request.date_start}}</td>
+                                <td class="text-center">{{tutorship.request.request.date_end}}</td>
+
+                                {% if tutorship.scored is 0%}
+                                <td><a onclick="score('{{tutorship.id}}')" class="btn btn-primary" data-toggle="modal" data-target="#modal-score">Puntuar</a></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade show" tabindex="-1" role="dialog" id="modal-score" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title text-white text-center" id="exampleModalLongTitle">Puntar tutoría</h5>
+                    </div>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <input name="tutorship" type="hidden" id="score" value="">
+                                <div class="text-center">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="score_options" id="inlineRadio1" value="1">
+                                    <label class="form-check-label" for="inlineRadio1">1</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="score_options" id="inlineRadio2" value="2">
+                                    <label class="form-check-label" for="inlineRadio2">2</label>
+                                </div>
+                                 <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="score_options" id="inlineRadio3" value="3">
+                                    <label class="form-check-label" for="inlineRadio3">3</label>
+                                </div>
+                                 <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="score_options" id="inlineRadio4" value="4">
+                                    <label class="form-check-label" for="inlineRadio4">4</label>
+                                </div>
+                                 <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="score_options" id="inlineRadio5" value="5">
+                                    <label class="form-check-label" for="inlineRadio5">5</label>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="container">
+                                <label for="comment_student">Comentario</label>
+                                <textarea name="comment_student" class="form-control" id="comment_student" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button id="modalClose2" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary button-blue">Puntuar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script>
+        function score(id) {
+            document.getElementById("score").value = id;
+        }
+    </script>
+</html>

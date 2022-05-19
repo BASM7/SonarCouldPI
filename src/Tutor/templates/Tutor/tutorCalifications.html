@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<html>
+    {% include "baseHead.html" %}
+    <body>  
+        {% include "tutorHeader.html" %}
+        <div class="container">
+            {% if average %}
+            {% if quantity %}
+            <h2 class="text-left" id="header3">Calificación promedio: {{ average }}</h2>
+            <h2 class="text-left" id="header2">Cantidad de calificaciones: {{ quantity }}</h2>
+            {% endif %}
+            {% endif %}
+            {% for calification in results %}
+            <div class="card mb-3">
+                <div class="row no-gutters">
+                    <div class="col-sm-6">
+                        <div class="card-body">
+                            <h5 class="card-title">Calificación: {{calification.score}}</h5> 
+                            <p class="card-text">Comentario: {{calification.student_comment}}</p>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </body>
+</html>

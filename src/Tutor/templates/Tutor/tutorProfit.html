@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include "baseHead.html" %}
+        <!-- Font Awesome -->
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+            integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <!-- Moment.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js"
+            integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+        <!-- Tempus Dominus Bootstrap 4 -->
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css"
+            integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js"
+            integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+    </head>
+    <body>
+        {% include "tutorHeader.html" %}
+        <div class="container mt-2">
+            Seleccione el mes y año para calcular sus ganancias
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+                    {{ form.date}}
+                    <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+                <br><button type="submit" class="btn btn-primary button-blue">Calcular</button>
+            </form>
+            {% if profit %}
+            {% if time %}
+                <h4> En este mes usted ha ganado {{ profit }} colones en un total de {{ time }} horas trabajadas</h4>
+            {% endif %}
+            {% endif %}
+        </div>
+    </body>
+    <script>
+        $(function () {
+            $("#datetimepicker1").datetimepicker({
+                viewMode: 'years',
+		        format: 'MM/YYYY'
+            });
+        });
+    </script>
+</html>

@@ -1,0 +1,35 @@
+<div>
+    {% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'error' %}
+        <div class="alert alert-danger msg fade show" role="alert">{{ message }}</div>
+        {% elif message.tags == 'warning' %}
+        <div class="alert alert-warning msg fade show" role="alert">{{ message }}</div>
+        {% elif message.tags == 'info' %}
+        <div class="alert alert-info msg fade show" role="alert">{{ message }}</div>
+        {% else %}
+        <div class="alert alert-success msg fade show" role="alert">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+    {% endif %}
+</div>
+
+<script>
+    function fade_alerts() {
+    const alerts = document.getElementsByClassName("alert msg");
+    let i = alerts.length;
+    let time;
+    for (let elem of alerts) {
+        i--;
+        time = 3250 + (1000 * i);
+        setTimeout(function () {
+            $(elem).fadeOut("slow");
+        }, time);
+    }
+}
+
+    // call fade out after DOMContentLoaded
+    window.addEventListener('DOMContentLoaded', (event) => {
+        fade_alerts();
+    });
+</script>

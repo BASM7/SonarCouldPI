@@ -1,0 +1,40 @@
+{% load static %}
+
+<html>
+    {% include 'baseHead.html' %}
+    <body>
+
+        {% include 'studentHeader.html' %}
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{% url 'search' type_search=last_type %}" id="search_bar" method = "GET" style="margin-top: 2vw;">
+                        <div class="form-row">
+                            <div class="col-lg-10 my-1">
+                                <input type="text" class="form-control" name="buscar" id="search_value" placeholder="Ejemplo: Informática" value="{{latest_search}}" >
+                            </div>
+                            <div class="col-auto my-1 text-center">
+                                <button type="submit" class="btn btn-primary button-blue">
+                                    <img src="{% static "img/search-icon.svg" %}"/> Buscar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+            
+            {% include 'filters.html'%}
+        
+            {% if not results %}
+                <div class="alert alert-info" role="alert">
+                    No se encontraron resultados.
+                </div>
+            {% else %}
+                    {% block content %}
+                    {% endblock content %}
+                {% include 'paginator.html'%}
+            {% endif %}
+        </div>
+    </body>
+</html>

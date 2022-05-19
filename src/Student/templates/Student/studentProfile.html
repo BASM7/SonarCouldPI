@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+{% load crispy_forms_tags %}
+<html>
+    <head>
+        {% include "baseHead.html" %}
+        <link rel="stylesheet" href="{% static 'css/profile_main.css' %}">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
+        <link rel="stylesheet" href="{% static 'css/tutorshipView.css' %}">
+    </head>
+    <body>
+        {% include "studentHeader.html" %}
+        <div class="container-md" id="main_container">
+            {% include 'messages.html' %}
+            <div id="main">
+                <div class="container">
+                    <div class="accordion" id="faq">
+                        <div class="card">
+                            <div class="card-header" id="faqhead1">
+                                <a href="#" class="btn btn-header-link" data-toggle="collapse" data-target="#faq1"
+                                   aria-expanded="true" aria-controls="faq1">Información personal</a>
+                            </div>
+                            <div id="faq1" class="collapse show" aria-labelledby="faqhead1" data-parent="#faq">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table class="table">
+                                                <tbody>
+                                                <tr>
+                                                    <th>Nombre:</th>
+                                                    <td>{{user_info.name}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Apellido:</th>
+                                                    <td>{{user_info.lastname}}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <button class="btn btn-primary mt-4 button-blue" data-toggle="modal" data-target="#modal-info" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-pen-fill" viewBox="0 0 16 16">
+                                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                                            </svg>
+                                            Editar información
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade show" tabindex="-1" role="dialog" id="modal-info" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-white text-center">Editar información</h5>
+                        </div>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                {{ form.as_p }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary button-blue">Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

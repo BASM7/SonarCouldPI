@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% include "baseHead.html" %}
+</head>
+<body>
+{% if current_user.is_tutor %}
+{% include "tutorHeader.html" %}
+{% elif current_user.is_student %}
+{% include "studentHeader.html" %}
+{% endif %}
+<div class="container">
+    <form id="post-form" method="POST" action="checkview">
+        {% csrf_token %}
+        <label id="room_name_top">Room Name</label>
+        <textarea id="input1" class="form-control" aria-label="With textarea" type="text" name="room_name"
+                  id="room_name" ></textarea>
+        <label id="username_top">Username</label>
+        <textarea id="input2" class="form-control" aria-label="With textarea" type="text" name="username" id="username"
+                  ></textarea>
+        <input class="btn btn-primary" type="submit" value="Enviar">
+    </form>
+</div>
+</body>
+</html>

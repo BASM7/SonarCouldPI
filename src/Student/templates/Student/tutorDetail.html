@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+   <head>
+        {% include "baseHead.html" %}
+        <link rel="stylesheet" href="{% static 'fullcalendar/lib/main.css' %}">
+    </head>
+ 
+    <body>
+    
+        {% include "studentHeader.html" %}
+
+        </br>
+               
+    {% if not error %}
+        <div class="container mt-2">
+            </br>
+
+            <h3> Calendario de {{calendar_title}}</h3>
+            <div id="calendar"></div>
+        
+            <form action="{% url 'request_tutorship_tutor' tutor=tutor_email %}" method="GET" id="form_report">
+                <input type="hidden" name="schedule_number" id="schedule">
+            </form>
+        </div>
+    </body>
+
+    <script src="{% static 'fullcalendar/lib/main.js' %}"></script>
+    <script src="{% static 'fullcalendar/lib/locales/es.js' %}"></script>
+    <script>
+
+            document.addEventListener('DOMContentLoaded', function(){
+
+                $('#select_tutor').on('change', function(){
+                    document.getElementById("submit_tutor").click();
+                });
+    
+                var calendarUI = document.getElementById('calendar')
+                var calendar = new FullCalendar.Calendar(calendarUI, {
+                    locale: 'es',
+                    selectable: false,
+                    selectMirror: false,
+                    eventClick: function(arg) {
+                        document.getElementById("schedule").value = arg.event.id;
+                        document.getElementById("form_report").submit();   
+                    },
+                    eventStartEditable: false,
+                    editable: true,
+                    nextDayThreshold: '00:00',
+                    displayEventTime: false,
+                    events: [
+                        {% for event in events %}
+                            {
+                                title: '{{event.message}}',
+                                start: '{{event.start}}',
+                                end: '{{event.end}}',
+                                id: '{{event.id}}',
+                            },
+                        {% endfor %}
+                    ]
+                });
+                calendar.render();
+            });
+
+    </script>
+    {% else %}
+        <div class="container mt-2">
+            <div class="alert alert-danger" role="alert">
+                Hubo un error al encontrar al tutor.
+            </div>
+        </div>
+    </body>
+    {% endif %}
+</html>

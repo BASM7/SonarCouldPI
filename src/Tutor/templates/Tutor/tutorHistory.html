@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        {% include "baseHead.html" %}
+    </head>
+    <body>
+        {% include "tutorHeader.html" %}
+        <div class = "container-fluid">
+            <div class="form-check">
+                <div class="col-md-8 offset-md-2 mt-2">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" class="text-center">Nombre</th>
+                            <th scope="col" class="text-center">Inicia</th>
+                            <th scope="col" class="text-center">Termina</th>
+                            <th scope="col" class="text-center"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for result in results %}
+                            <tr>
+                                <td class="text-center">{{result.name}}</a></td>
+                                <td class="text-center">{{result.date_start}}</td>
+                                <td class="text-center">{{result.date_end}}</td>
+                                <td><a href="{% url 'tutorship_califications' result.tutorship_id %}" class="btn btn-primary button-blue">Ver</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

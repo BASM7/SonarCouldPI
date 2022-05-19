@@ -1,0 +1,35 @@
+<div class="row heading">
+    <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
+        <div class="heading-avatar-icon">
+            <img src="https://www.clipartmax.com/png/middle/214-2143742_individuals-whatsapp-profile-picture-icon.png">
+        </div>
+    </div>
+    <div class="col-sm-8 col-xs-7 heading-name">
+        <p id="current-conversation-receiver" class="heading-name-meta">{{ receiver.get_full_name }}</p>
+    </div>
+</div>
+<div class="col-md-6 offset-1 message" id="conversation">
+    {% for chat_message in chat_messages %}
+    <div class="row">
+        {% if chat_message.user_sender.id == receiver.id %}
+        <div class="col-md-12 message-main-receiver">
+            <div class="receiver">
+                <div class="message-text">
+                    {{ chat_message.content }}
+                </div>
+                <span class="message-time pull-right">{{ chat_message.date_sent }}</span>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-12 message-main-sender">
+            <div class="sender">
+                <div class="message-text">
+                    {{ chat_message.content }}
+                </div>
+                <span class="message-time pull-right">{{ chat_message.date_sent }}</span>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>

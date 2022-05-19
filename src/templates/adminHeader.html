@@ -1,0 +1,124 @@
+{% load static %}
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+        {% if select_navbar_start %}
+        <li class="nav-item dropdown">
+            <span class="nav-link active">Inicio</span>
+        </li>
+        {% else %}
+        <li>
+        <a class="nav-link" href="{% url 'index' %}">Inicio</a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_admin%}
+        <li class="nav-item">
+            <span class="nav-link active" role="button">
+            Administradores
+            </span>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_administrator' %}" role="button">
+            Administradores
+            </a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_regions %}
+        <li class="nav-item">
+            <span class="nav-link active" role="button">
+            Regiones
+            </span>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'add_region' %}" role="button">
+            Regiones
+            </a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_courses %}
+        <li class="nav-item">
+            <span class="nav-link active" role="button">
+            Cursos
+            </span>
+        </li
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'edit_course' %}" role="button">
+            Cursos
+            </a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_resources %}
+        <li class="nav-item">
+            <span class="nav-link active"role="button">
+            Recursos
+            </span>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'edit_resource' %}" role="button">
+            Recursos
+            </a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_modalities %}
+        <li class="nav-item">
+            <span class="nav-link active"role="button">
+            Modalidades
+            </span>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'edit_modality' %}" role="button">
+            Modalidades
+            </a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_sessions %}
+        <li class="nav-item">
+            <span class="nav-link active" role="button">
+            Sesiones
+            </span>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'edit_session' %}" role="button">
+            Sesiones
+            </a>
+        </li>
+        {% endif %}
+
+        {% if select_navbar_payments %}
+        <li class="nav-item">
+            <span class="nav-link active" role="button">
+            Retribuciones
+            </span>
+        </li>
+        {% else %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'edit_payment' %}" role="button">
+            Retribuciones
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+    <ul class="navbar-nav ml-auto">
+        <a type="button" class="btn btn-primary button-blue" href="{% url 'logout' %}" >
+            <img src="{% static "img/leave-icon.svg" %}" alt="leave-icon"/>
+        </a>
+    </ul>
+    </div>
+    </div>
+    </nav>
+</header>
+

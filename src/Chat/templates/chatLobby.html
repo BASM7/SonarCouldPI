@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+{% load custom_tag %}
+{% load static %}
+<html>
+<head>
+    {% include "baseHead.html" %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'css/chatLobby.css' %}">
+</head>
+<body>
+{% if current_user.is_tutor %}
+{% include "tutorHeader.html" %}
+{% elif current_user.is_student %}
+{% include "studentHeader.html" %}
+{% endif %}
+<div class="chatlobby">
+    <div class="row chatlobby-container">
+        <div class="col-md-3 side">
+            <div class="side-one">
+                <div class="row heading">
+                    <div class="col-md-3 heading-avatar">
+                        <div class="heading-avatar-icon">
+                            <img src="https://www.clipartmax.com/png/middle/214-2143742_individuals-whatsapp-profile-picture-icon.png">
+                        </div>
+                    </div>
+                </div>
+                <div class="row searchBox">
+                    <div class="searchBox-inner">
+                        <div class="form-group has-feedback">
+                            <input id="searchText" type="text" class="form-control search-box" name="searchText"
+                                   placeholder="Buscar">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sideBar">
+                    <ul class="room-list">
+                        {% for room in rooms %}
+                        <li>
+                            <a href="{% url 'chatlobby' room.id %}">
+                                <div class="row sideBar-body">
+                                    <div class="col-md-3 sideBar-avatar">
+                                        <div class="avatar-icon">
+                                            <img src="https://www.clipartmax.com/png/middle/214-2143742_individuals-whatsapp-profile-picture-icon.png">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 sideBar-main">
+                                        <div class="row">
+                                            <div class="col-md-8 sideBar-name">
+                                                {% get_context_reciever current_user room as other_user %}
+                                                <span class="name-meta">{{ other_user.get_full_name }}</span>
+                                            </div>
+                                            <div class="col-md-4 pull-right sideBar-time">
+                                                <span class="time-meta pull-right">18:18</span>
+                                            </div>
+                                        </div>
+                                        <p hidden class="room-meta">{{ room.id }}</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 conversation">
+            <div id="messages-container" class="conversation"></div>
+            <div id="form-div" style="margin-top: 2px;">
+                <form id="post-form">
+                    <div class="row reply ml-4">
+                        <div class="col-md-6 reply-main">
+                            <textarea class="form-control" rows="1" id="comment" placeholder="Nuevo mensaje"></textarea>
+                            <input name="room_id" type="hidden" id="room_input" value="{{ current_room.id }}">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    let timer = null
+
+    $(document).ready(function () {
+        let objDiv = $('.message');
+        objDiv.scrollTop(objDiv.prop('scrollHeight'));
+        $('#form-div').hide();
+
+        $("textarea").keyup(function (e) {
+            if ((e.keyCode || e.which) == 13) { //Enter keycode
+                $("#post-form").submit();
+            }
+        });
+
+        window.addEventListener('scroll', function () {
+            if (timer) {
+                clearTimeout(timer);
+            } else {
+                setTimeout(function () {
+                    timer = setTimeout(fetchdata, 1000);
+                }, 50);
+            }
+        });
+
+        timer = setTimeout(fetchdata, 1000);
+    });
+
+
+    function fetchdata() {
+        let postURL = "http://127.0.0.1:8000/mensajes/";
+        let room_id = $('#room_input').val();
+        $.ajax({
+            url: postURL,
+            type: 'POST',
+            data: {
+                room_id: room_id,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (data) {
+                $('#form-div').show();
+                $('#messages-container').html(data);
+                let objDiv = $('.message');
+                objDiv.scrollTop(objDiv.prop('scrollHeight'));
+            },
+            complete: function () {
+                timer = setTimeout(fetchdata, 1000);
+            }
+        });
+    }
+
+    $(document).on('submit', '#post-form', function (e) {
+        let postURL = "http://127.0.0.1:8000/mensajes/enviar";
+        let room_id = $('#room_input').val();
+        let message = $('#comment').val();
+        $('#comment').val('');
+        e.preventDefault();
+        $.ajax({
+            type: 'POST',
+            url: postURL,
+            data: {
+                'room': room_id,
+                'message': message,
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+            },
+            success: function (data) {
+                $('#messages-container').html(data);
+                $('#room_input').val(room_id);
+                let objDiv = $('.message');
+                objDiv.scrollTop(objDiv.prop('scrollHeight'));
+            }
+        });
+    });
+
+</script>
+</html>
+

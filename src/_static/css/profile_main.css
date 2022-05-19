@@ -1,0 +1,22 @@
+#main_container {
+    margin-top: 1.5vw;
+}
+
+.asteriskField {
+    display: none;
+}
+
+.control-group {
+    margin-bottom: 0.5vw;
+    margin-top: 0.5vw;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.control-label{
+    font-weight: bold;
+}
