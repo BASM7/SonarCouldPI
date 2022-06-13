@@ -27,6 +27,7 @@ class CalificationsTutorships(generic.View):
 
     def get(self, request, request_pk):
         user = User.objects.get(pk=request.user.id)
+        num_reviews = 0
         if user.is_tutor():
             query_set = list(TutorshipScore.objects.filter(tutorship_id=request_pk).order_by('id'))
             
@@ -37,8 +38,10 @@ class CalificationsTutorships(generic.View):
 
             for item in query_set:
                 total_calification += item.score
-
-            average_calification = total_calification / len(query_set)
+            
+            if query_set:
+                num_reviews = len(query_set)
+            average_calification = total_calification / num_reviews
 
             context = create_context(query_set, average_calification, len(query_set))
 
