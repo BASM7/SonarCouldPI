@@ -55,14 +55,14 @@ class RequestNotification(models.Model):
     date = models.DateTimeField(default=timezone.now)
     seen = models.BooleanField(default=False)
 
-    def is_new_request(self):
-        return self.notification_type == self.NEW_REQUEST
+#     def is_new_request(self):
+#         return self.notification_type == self.NEW_REQUEST
 
-    def is_accepted_request(self):
-        return self.notification_type == self.ACCEPTED_REQUEST
+#     def is_accepted_request(self):
+#         return self.notification_type == self.ACCEPTED_REQUEST
 
-    def is_rejected_request(self):
-        return self.notification_type == self.REJECTED_REQUEST
+#     def is_rejected_request(self):
+#         return self.notification_type == self.REJECTED_REQUEST
 
 
 
