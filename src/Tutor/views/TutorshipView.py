@@ -58,6 +58,7 @@ class TutorshipView(View):
             return render(request, self.template_name, context)
         else:
             return redirect('index')
+        return redirect('index')
 
     def post(self, request, request_pk=None):
         form_info = self.form_info_class(request.POST)
