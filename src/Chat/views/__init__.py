@@ -4,7 +4,7 @@ from .SendMessage import SendMessage
 
 
 __all__ = [
-    ChatRoom,
-    ChatLobby,
-    SendMessage,
+    "ChatRoom",
+    "ChatLobby",
+    "SendMessage",
 ]
